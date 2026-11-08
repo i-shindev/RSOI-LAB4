@@ -1,0 +1,9 @@
+image:
+  repository: kukushenok/rsoi-cars-service
+port: 8070
+env:
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: database-urls
+        key: cars

@@ -1,0 +1,12 @@
+replicaCount: 1
+image:
+  repository: ""
+  tag: latest
+  pullPolicy: Always
+port: 8080
+env: []
+ingress:
+  enabled: false
+  className: ""
+  host: ""
+  annotations: {}

@@ -1,0 +1,7 @@
+image: postgres:13
+storage:
+  size: 2Gi
+  storageClassName: ""
+auth:
+  existingSecret: postgres-auth
+  passwordKey: password
