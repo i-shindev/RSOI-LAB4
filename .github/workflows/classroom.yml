@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      DEPLOY_NAMESPACE: ${{ vars.DEPLOY_NAMESPACE || 'test' }}
+      DEPLOY_NAMESPACE: ${{ vars.DEPLOY_NAMESPACE || secrets.DEPLOY_NAMESPACE || 'test' }}
     concurrency:
       group: lab4-cloud-deploy
       cancel-in-progress: false
