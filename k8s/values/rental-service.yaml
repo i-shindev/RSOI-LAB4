@@ -1,0 +1,9 @@
+image:
+  repository: kukushenok/rsoi-rental-service
+port: 8060
+env:
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: database-urls
+        key: rentals

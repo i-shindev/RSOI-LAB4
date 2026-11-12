@@ -1,0 +1,9 @@
+image:
+  repository: kukushenok/rsoi-payment-service
+port: 8050
+env:
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: database-urls
+        key: payments

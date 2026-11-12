@@ -1,0 +1,12 @@
+image:
+  repository: kukushenok/rsoi-gateway
+port: 8080
+env:
+  - name: CARS_SERVICE_URL
+    value: http://cars-service:8070
+  - name: RENTAL_SERVICE_URL
+    value: http://rental-service:8060
+  - name: PAYMENT_SERVICE_URL
+    value: http://payment-service:8050
+ingress:
+  enabled: true
