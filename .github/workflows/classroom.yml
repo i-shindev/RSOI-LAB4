@@ -37,6 +37,8 @@ jobs:
     if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      DEPLOY_NAMESPACE: ${{ vars.DEPLOY_NAMESPACE || 'test' }}
     concurrency:
       group: lab4-cloud-deploy
       cancel-in-progress: false
@@ -82,18 +84,18 @@ jobs:
             echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
           fi
           echo "KUBECONFIG=$config" >> "$GITHUB_ENV"
-          kubectl --kubeconfig "$config" --request-timeout=20s -n test get deployments
+          kubectl --kubeconfig "$config" --request-timeout=20s -n "$DEPLOY_NAMESPACE" get deployments
 
       - name: Deploy with Helm
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           for secret in postgres-auth database-urls; do
-            kubectl -n test get secret "$secret" -o name
+            kubectl -n "$DEPLOY_NAMESPACE" get secret "$secret" -o name
           done
-          helm upgrade --install postgres ./k8s/postgres -n test --wait --timeout 5m
+          helm upgrade --install postgres ./k8s/postgres -n "$DEPLOY_NAMESPACE" --wait --timeout 5m
           for app in cars-service rental-service payment-service gateway; do
-            helm upgrade --install "$app" ./k8s/service -n test --wait --timeout 3m \
+            helm upgrade --install "$app" ./k8s/service -n "$DEPLOY_NAMESPACE" --wait --timeout 3m \
               -f "./k8s/values/$app.yaml" --set-string "image.tag=$IMAGE_TAG"
           done
 
@@ -117,4 +119,4 @@ jobs:
           file=v3/postman/environment.json
           jq --arg url "$base_url" '(.values[] | select(.key == "baseUrl") | .value) = $url' "$file" > "$file.tmp"
           mv "$file.tmp" "$file"
-          bash ./scripts/test-script.sh v3 payment-service test
+          bash ./scripts/test-script.sh v3 payment-service "$DEPLOY_NAMESPACE"
