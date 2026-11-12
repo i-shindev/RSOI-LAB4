@@ -76,7 +76,7 @@ jobs:
             curl --fail --silent --show-error --location --retry 3 \
               https://github.com/cloud-ru-tech/cloudlogin/releases/latest/download/cloudlogin_Linux_amd64.tar.gz \
               -o "$RUNNER_TEMP/cloudlogin.tar.gz"
-            tar -xzf "$RUNNER_TEMP/cloudlogin.tar.gz" -C "$RUNNER_TEMP" cloudlogin
+            tar -xzf "$RUNNER_TEMP/cloudlogin.tar.gz" -C "$RUNNER_TEMP" ./cloudlogin
             chmod +x "$RUNNER_TEMP/cloudlogin"
             export PATH="$RUNNER_TEMP:$PATH"
             echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
