@@ -24,7 +24,7 @@ services:
 
   payment-service:
     build: ./payment-service
-    image: kukushenok/rsoi-payment-service
+    image: kukushenok/rsoi-payment-service:${IMAGE_TAG:-latest}
     restart: on-failure
     environment:
       DATABASE_URL: postgres://program:test@postgres:5432/payments
@@ -39,7 +39,7 @@ services:
 
   rental-service:
     build: ./rental-service
-    image: kukushenok/rsoi-rental-service
+    image: kukushenok/rsoi-rental-service:${IMAGE_TAG:-latest}
     restart: on-failure
     environment:
       DATABASE_URL: postgres://program:test@postgres:5432/rentals
@@ -54,7 +54,7 @@ services:
 
   cars-service:
     build: ./cars-service
-    image: kukushenok/rsoi-cars-service
+    image: kukushenok/rsoi-cars-service:${IMAGE_TAG:-latest}
     restart: on-failure
     environment:
       DATABASE_URL: postgres://program:test@postgres:5432/cars
@@ -69,7 +69,7 @@ services:
 
   gateway:
     build: ./gateway
-    image: kukushenok/rsoi-gateway
+    image: kukushenok/rsoi-gateway:${IMAGE_TAG:-latest}
     restart: on-failure
     environment:
       CARS_SERVICE_URL: http://cars-service:8070
